@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tools {
+namespace Helpers {
     class Program {
         static void Main(string[] args) {
         }
