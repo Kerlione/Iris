@@ -3,6 +3,7 @@ using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 namespace Helpers
 {
@@ -22,8 +23,7 @@ namespace Helpers
             Rectangle[] eyesDetected = eye.DetectMultiScale(gray, 1.1, 10, new Size(20, 20));
             eyes.AddRange(eyesDetected);
 
-            foreach (Rectangle e in eyesDetected)
-                eyes.Add(e);
+            
         }
 
         public static void GetEyes(string path)
@@ -32,10 +32,22 @@ namespace Helpers
             List<Rectangle> eyes = new List<Rectangle>();
 
             Detect(image, "haarcascade_eye.xml", eyes);
+            int i = 1;
+            if (!Directory.Exists("Eyes/"))
+                Directory.CreateDirectory("Eyes");
+
             foreach (Rectangle eye in eyes)
+            {
                 CvInvoke.Rectangle(image, eye, new Bgr(Color.Red).MCvScalar, 2);
 
-            image.Save("Eyes.jpg");
+                Image<Gray, byte> eyeImage = new Image<Gray, byte>(path);
+                eyeImage.ROI = eye;
+                eyeImage.Save("Eyes//" + i + ".jpg");
+                i++;
+            }
+                
+
+            image.Save("Eyes//Eyes.jpg");
         }
     }
 }

@@ -82,7 +82,6 @@
     <Content Include="haarcascade_eye.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="License-LGPL.txt" />
     <Content Include="testingImage.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
