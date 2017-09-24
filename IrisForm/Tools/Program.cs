@@ -24,9 +24,13 @@ namespace Helpers {
 
 
             Console.WriteLine(" --- TESTING EYE DETECTER CLASS ---");
+            TimeTester EyeTime = new TimeTester("Eye detection", "Eye detection");
+            EyeTime.SetTimer();
             EyeDetecter.GetEyes("testingImage.jpg");
+            EyeTime.StopTimer();
+            Console.WriteLine(EyeTime.GetStringTime());
+            EyeTime.WriteToFile();
             Console.WriteLine("Cuker!");
-            Process.Start(new ProcessStartInfo("Eyes.jpg"));
             Console.WriteLine(" --- END --- ");
 
             Console.WriteLine("That's all!");
