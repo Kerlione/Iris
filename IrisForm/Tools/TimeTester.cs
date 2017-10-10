@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Helpers
 {
@@ -17,10 +13,11 @@ namespace Helpers
         public string FileName;
         public bool AddNewToFile;
 
-        public TimeTester(string name, bool addNewToFile = true)
+        public TimeTester(string name, string fileName = null, bool addNewToFile = true)
         {
             this.name = name;
             this.AddNewToFile = addNewToFile;
+            this.FileName = fileName;
         }
 
         public void SetTimer()
