@@ -12,91 +12,78 @@ namespace Demo_Server
 {
     class HandleClient
     {
-        TcpClient clientSocket;
-        string clientNumber;
-        byte[] buffer;
+        private const int BufferSize = 1024;
+        private byte[] buffer;
+        private Socket client;
+        private List<byte> listOfBytes;
 
-        public HandleClient(TcpClient inClientSocket, string clineNo)
+        private int packetCounter;
+
+
+        public HandleClient(Socket clientSocket)
         {
-            clientSocket = inClientSocket;
-            clientNumber = clineNo;
-            Thread clientThread = new Thread(Handle);
-            clientThread.Start();
+            client = clientSocket;
+            
+            Server.Log("Client connected!");
+            buffer = new byte[BufferSize];
+            listOfBytes = new List<byte>();
+
+            packetCounter = 0;
+
+            client.BeginReceive(buffer, 0, BufferSize, SocketFlags.None, new AsyncCallback(AsyncReceiveCallback), null);
         }
 
-        private void Handle()
+        private void AsyncReceiveCallback(IAsyncResult ar)
         {
-            buffer = new byte[65536];
-            NetworkStream networkStream = clientSocket.GetStream();
-
-            while ((true))
+            try
             {
-                try
+                int bytes = client.EndReceive(ar);
+
+                if (bytes == 0)
                 {
-                    List<byte> imageInBytes = new List<byte>();
-                    //int received = 0;
-                    networkStream = clientSocket.GetStream();
-                    int receivedLength = 0;
-                    
-
-                    if (networkStream.CanRead)
-                    {
-                        do
-                        {
-                            receivedLength += networkStream.Read(buffer, 0, clientSocket.ReceiveBufferSize);
-                            imageInBytes.AddRange(buffer);
-                            Log("Readed");
-                        } while (networkStream.DataAvailable);
-
-                    }
-                    
-
-                    if (receivedLength == 0)
-                    {
-                        Log("Client #" + clientNumber + ": disconnected!");
-                        break;
-                    }
-
-                    
-
-
-                    ImageConverter IC = new ImageConverter();
-                    Bitmap image = (Bitmap)IC.ConvertFrom(imageInBytes.ToArray());
-
-                    // Other way to decode image
-                    //
-                    //MemoryStream ms = new MemoryStream(buffer);
-                    //ms.Seek(0, SeekOrigin.Begin);
-                    //Bitmap image = new Bitmap(ms);
-
-                    image.Save("image.jpg");
-
-                    Array.Clear(buffer, 0, buffer.Length);
-
-                    //Resize(ref buffer, 1048576);
-                    Log("From client #" + clientNumber + ": received image");
-
-                    networkStream.Flush();
-
-                    // TODO send data
-                    //serverResponse = "Server to clinet(" + clNo + ") " + rCount;
-                    //sendBytes = Encoding.ASCII.GetBytes(serverResponse);
-                    //networkStream.Write(sendBytes, 0, sendBytes.Length);
-                    //networkStream.Flush();
-                    //Console.WriteLine(" >> " + serverResponse);
-                    //
+                    Server.Log("Client disconnected!");
+                    client.Close();
+                    return;
                 }
-                catch (Exception ex)
+
+                if (packetCounter == 0)
                 {
-                    Log(ex.Message);
+                    packetCounter = BitConverter.ToInt16(buffer, 0);
+                    Server.Log("Will receive " + packetCounter + " packets!");
+                } else
+                {
+                    listOfBytes.AddRange(buffer);
+                    Array.Clear(buffer, 0, BufferSize);
+
+                    packetCounter--;
+                    
+                    Server.Log("Data received! (" + packetCounter + ")");
+
+                    if (packetCounter == 0)
+                    {
+                        ImageConverter IC = new ImageConverter();
+                        Bitmap image = (Bitmap)IC.ConvertFrom(listOfBytes.ToArray());
+                        
+                        image.Save("image.jpg");
+                        listOfBytes.Clear();
+
+                        Server.Log("Image created!");
+                    }
                 }
+
+                
+
+                client.BeginReceive(buffer, 0, BufferSize, SocketFlags.None, new AsyncCallback(AsyncReceiveCallback), null);
+            }
+            catch (Exception ex)
+            {
+                Server.Log(ex.Message);
             }
         }
+        
 
 
-        private void Log(string info)
-        {
-            Console.WriteLine("[" + DateTime.Now.ToShortTimeString() + "] " + info);
-        }
+
+
     }
 }

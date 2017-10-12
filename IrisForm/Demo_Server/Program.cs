@@ -10,8 +10,7 @@ namespace Demo_Server
     {
         static void Main(string[] args)
         {
-            Server server = new Server();
-            server.Start();
+            Server.Start();
         }
     }
 }

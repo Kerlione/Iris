@@ -11,33 +11,29 @@ namespace Demo_Server
 {
     class Server
     {
-        
+        public static Socket server;
+        private static Socket client;
 
-        public void Start()
+        public static void Start()
         {
             try
             {
-                TcpListener serverSocket = new TcpListener(2017);
-                TcpClient clientSocket = default(TcpClient);
-                int counter = 0;
+                if (server != null && server.Connected)
+                    server.Disconnect(false);
 
-                serverSocket.Start();
+                server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                EndPoint endPoint = new IPEndPoint(IPAddress.Any, 4242);
+
+                server.Bind(endPoint);
+                server.Listen(100);
+
                 Log("Server started!");
-
 
                 while (true)
                 {
-                    counter ++;
-                    clientSocket = serverSocket.AcceptTcpClient();
-                    Log("Client #" + counter + ": connected!");
-
-                    HandleClient client = new HandleClient(clientSocket, Convert.ToString(counter));
+                    client = server.Accept();
+                    new HandleClient(client);
                 }
-
-                clientSocket.Close();
-                serverSocket.Stop();
-                Log("Exit");
-                Console.ReadLine();
 
             }
             catch (Exception ex)
@@ -45,12 +41,12 @@ namespace Demo_Server
                 Log(ex.Message);
             }
         }
+        
 
 
-
-        private void Log(string info)
+        public static void Log(string info)
         {
-            Console.WriteLine("[" + DateTime.Now.ToShortTimeString() + "] " + info);
+            Console.WriteLine("[" + DateTime.Now.ToLongTimeString() + "] " + info);
         }
     }
 }

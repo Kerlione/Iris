@@ -28,7 +28,7 @@ namespace Demo_Client
             // TODO
             // Connect camera and start it
 
-            clientSocket.Connect("127.0.0.1", 2017);
+            clientSocket.Connect("127.0.0.1", 4242);
             LblStatus.Text = "Status: Connected to the server";
 
         }
@@ -63,10 +63,18 @@ namespace Demo_Client
 
         private void btnScan_Click(object sender, EventArgs e)
         {
+            NetworkStream serverStream = clientSocket.GetStream();
+
             ImageConverter converter = new ImageConverter();
             byte[] buffer = (byte[])converter.ConvertTo(Image, typeof(byte[]));
 
-            NetworkStream serverStream = clientSocket.GetStream();
+            byte[] buffLength = BitConverter.GetBytes(buffer.Length/1024+1);
+
+            serverStream.Write(buffLength, 0, buffLength.Length);
+            serverStream.Flush();
+
+            
+
             
             serverStream.Write(buffer, 0, buffer.Length);
             serverStream.Flush();
