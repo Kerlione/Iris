@@ -34,6 +34,8 @@
             this.btnScan = new System.Windows.Forms.Button();
             this.LblFile = new System.Windows.Forms.Label();
             this.LblStatus = new System.Windows.Forms.Label();
+            this.btnUseTheCamera = new System.Windows.Forms.Button();
+            this.cmbBoxAvailableDevices = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.imgBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,11 +106,31 @@
             this.LblStatus.TabIndex = 5;
             this.LblStatus.Text = "Status: Not connected to the server";
             // 
+            // btnUseTheCamera
+            // 
+            this.btnUseTheCamera.Location = new System.Drawing.Point(519, 500);
+            this.btnUseTheCamera.Name = "btnUseTheCamera";
+            this.btnUseTheCamera.Size = new System.Drawing.Size(75, 23);
+            this.btnUseTheCamera.TabIndex = 6;
+            this.btnUseTheCamera.Text = "Start/Stop";
+            this.btnUseTheCamera.UseVisualStyleBackColor = true;
+            this.btnUseTheCamera.Click += new System.EventHandler(this.btnUseTheCamera_Click);
+            // 
+            // cmbBoxAvailableDevices
+            // 
+            this.cmbBoxAvailableDevices.FormattingEnabled = true;
+            this.cmbBoxAvailableDevices.Location = new System.Drawing.Point(299, 501);
+            this.cmbBoxAvailableDevices.Name = "cmbBoxAvailableDevices";
+            this.cmbBoxAvailableDevices.Size = new System.Drawing.Size(196, 21);
+            this.cmbBoxAvailableDevices.TabIndex = 7;
+            // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 532);
+            this.Controls.Add(this.cmbBoxAvailableDevices);
+            this.Controls.Add(this.btnUseTheCamera);
             this.Controls.Add(this.LblStatus);
             this.Controls.Add(this.LblFile);
             this.Controls.Add(this.btnScan);
@@ -135,6 +157,8 @@
         private System.Windows.Forms.Button btnScan;
         private System.Windows.Forms.Label LblFile;
         private System.Windows.Forms.Label LblStatus;
+        private System.Windows.Forms.Button btnUseTheCamera;
+        private System.Windows.Forms.ComboBox cmbBoxAvailableDevices;
     }
 }
 
