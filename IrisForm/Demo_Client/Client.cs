@@ -9,9 +9,11 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
+using AForge;
 using AForge.Video.DirectShow;
 using AForge.Video;
+using System.Drawing.Imaging;
 
 namespace Demo_Client
 {
@@ -22,7 +24,7 @@ namespace Demo_Client
         TcpClient clientSocket = new TcpClient();
 
         private FilterInfoCollection Devices;
-        private VideoCaptureDevice FinalVideo;
+        private VideoCaptureDevice VideoFromCamera;
 
         public Client()
         {
@@ -43,7 +45,7 @@ namespace Demo_Client
                 cmbBoxAvailableDevices.Items.Add(Device.Name);
             }
             cmbBoxAvailableDevices.SelectedIndex = 0;
-            FinalVideo = new VideoCaptureDevice();
+            VideoFromCamera = new VideoCaptureDevice();
         }
 
         protected override void OnClosed(EventArgs e)
@@ -55,7 +57,7 @@ namespace Demo_Client
                 clientSocket.Client.Disconnect(false);
                 clientSocket.Close();
             }
-            if (FinalVideo.IsRunning == true) FinalVideo.Stop();
+            if (VideoFromCamera.IsRunning == true) VideoFromCamera.Stop();
         }
 
         private void btnOpenFile_Click(object sender, EventArgs e)
@@ -102,16 +104,21 @@ namespace Demo_Client
         }
 
         private void btnUseTheCamera_Click(object sender, EventArgs e) {
-            if (FinalVideo.IsRunning == true) FinalVideo.Stop();
-            FinalVideo = new VideoCaptureDevice(Devices[cmbBoxAvailableDevices.SelectedIndex].MonikerString);
-            FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
+            if (VideoFromCamera.IsRunning == true) VideoFromCamera.Stop();
+            VideoFromCamera = new VideoCaptureDevice(Devices[cmbBoxAvailableDevices.SelectedIndex].MonikerString);
+            VideoFromCamera.NewFrame += new NewFrameEventHandler(VideoFromCamera_NewFrame);
 
-            FinalVideo.Start();
+            VideoFromCamera.Start();
         }
 
-        private void FinalVideo_NewFrame(object sender, NewFrameEventArgs eventArgs) {
+        private void VideoFromCamera_NewFrame(object sender, NewFrameEventArgs eventArgs) {
             Bitmap video = (Bitmap)eventArgs.Frame.Clone();
             imgBox.Image = video;
+        }
+
+        private void btnCapture_Click(object sender, EventArgs e) {
+            if(imgBox.Image!=null)
+                Image = (Bitmap)imgBox.Image;
         }
     }
 }
