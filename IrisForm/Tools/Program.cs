@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace Helpers {
 
@@ -34,7 +35,14 @@ namespace Helpers {
             //Console.WriteLine(" --- END --- ");
 
 
-            KanniAlgorithm.Filtr("testingImage.jpg");
+            //KanniAlgorithm.Filtr("eye.jpg");
+
+            for (int i = 10; i >= 0; i--)
+            {
+                Bitmap image = new Bitmap("eye.jpg");
+                EdgeDetection.Detect(image, i);
+                image.Save("New_image(" + i + ").jpg");
+            }
 
             Console.WriteLine("That's all!");
             Console.ReadKey();

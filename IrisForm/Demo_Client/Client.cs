@@ -112,8 +112,9 @@ namespace Demo_Client
         }
 
         private void VideoFromCamera_NewFrame(object sender, NewFrameEventArgs eventArgs) {
-            Bitmap video = (Bitmap)eventArgs.Frame.Clone();
-            imgBox.Image = video;
+            //Bitmap video = (Bitmap)eventArgs.Frame.Clone();
+            if(imgBox.Image != null) imgBox.Image.Dispose();
+            imgBox.Image = (Bitmap)eventArgs.Frame.Clone();
         }
 
         private void btnCapture_Click(object sender, EventArgs e) {

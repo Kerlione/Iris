@@ -4,11 +4,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tools;
 
 namespace Helpers
 {
     public static class KanniAlgorithm
     {
+        const int LowerBorder = 120;
+        const int UpperBorder = 140;
+
         static readonly int[,] Dx = new int[3, 3]
         {
             { -1, -2, -1},
@@ -28,7 +32,7 @@ namespace Helpers
 
         public static void Filtr(string path)
         {
-            image = new Bitmap(path);
+            image = Recolor.ToGrey(new Bitmap(path));
             newImage = new Bitmap(image);
 
             for (int y = 0; y < image.Width; y++)
@@ -36,8 +40,9 @@ namespace Helpers
                 {
                     int color = (int)Math.Sqrt(Math.Pow(G(y, x, true),2) + Math.Pow(G(y, x, false), 2));
 
-                    if (color < 0) color = 0;
-                    else if (color > 255) color = 255;
+
+                    if (color < LowerBorder) color = 0;
+                    if (color > UpperBorder) color = 225;
 
                     newImage.SetPixel(y, x, Color.FromArgb(color, color, color));
                 }
