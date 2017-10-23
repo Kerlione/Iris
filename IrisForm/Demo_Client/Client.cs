@@ -33,11 +33,17 @@ namespace Demo_Client
 
         private void Client_Load(object sender, EventArgs e)
         {
-            // TODO
-            // Connect camera and start it
 
-            clientSocket.Connect("127.0.0.1", 4242);
-            LblStatus.Text = "Status: Connected to the server";
+            try
+            {
+                clientSocket.Connect("127.0.0.1", 4242);
+                LblStatus.Text = "Status: Connected to the server";
+            }
+            catch (Exception)
+            {
+                LblStatus.Text = "Status: Not connected to the server";
+            }
+
 
             Devices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
 
@@ -57,6 +63,7 @@ namespace Demo_Client
                 clientSocket.Client.Disconnect(false);
                 clientSocket.Close();
             }
+
             if (VideoFromCamera.IsRunning == true) VideoFromCamera.Stop();
         }
 
@@ -64,22 +71,24 @@ namespace Demo_Client
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                LblFile.Text = openFileDialog.SafeFileName;
+                if (VideoFromCamera.IsRunning == true)
+                    VideoFromCamera.Stop();
+                
+                if (Image != null) Image.Dispose();
                 Image = new Bitmap(openFileDialog.FileName);
                 imgBox.Image = Image;
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            // TODO
-            // Turn on camera again
-
-        }
-
         private void btnScan_Click(object sender, EventArgs e)
         {
             NetworkStream serverStream = clientSocket.GetStream();
+
+            if (VideoFromCamera.IsRunning == true)
+                VideoFromCamera.Stop();
+
+            if (imgBox.Image != null)
+                Image = (Bitmap)imgBox.Image;
 
             ImageConverter converter = new ImageConverter();
             byte[] buffer = (byte[])converter.ConvertTo(Image, typeof(byte[]));
@@ -104,22 +113,24 @@ namespace Demo_Client
         }
 
         private void btnUseTheCamera_Click(object sender, EventArgs e) {
-            if (VideoFromCamera.IsRunning == true) VideoFromCamera.Stop();
-            VideoFromCamera = new VideoCaptureDevice(Devices[cmbBoxAvailableDevices.SelectedIndex].MonikerString);
-            VideoFromCamera.NewFrame += new NewFrameEventHandler(VideoFromCamera_NewFrame);
 
-            VideoFromCamera.Start();
+            if (VideoFromCamera.IsRunning == true)
+                VideoFromCamera.Stop();
+            else
+            {
+                VideoFromCamera = new VideoCaptureDevice(Devices[cmbBoxAvailableDevices.SelectedIndex].MonikerString);
+                VideoFromCamera.NewFrame += new NewFrameEventHandler(VideoFromCamera_NewFrame);
+
+                VideoFromCamera.Start();
+            }
         }
 
         private void VideoFromCamera_NewFrame(object sender, NewFrameEventArgs eventArgs) {
-            //Bitmap video = (Bitmap)eventArgs.Frame.Clone();
+            
             if(imgBox.Image != null) imgBox.Image.Dispose();
             imgBox.Image = (Bitmap)eventArgs.Frame.Clone();
+            Image = eventArgs.Frame;
         }
-
-        private void btnCapture_Click(object sender, EventArgs e) {
-            if(imgBox.Image!=null)
-                Image = (Bitmap)imgBox.Image;
-        }
+        
     }
 }

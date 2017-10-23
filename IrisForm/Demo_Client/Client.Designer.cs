@@ -30,14 +30,10 @@
         {
             this.imgBox = new System.Windows.Forms.PictureBox();
             this.btnOpenFile = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.btnScan = new System.Windows.Forms.Button();
-            this.LblFile = new System.Windows.Forms.Label();
             this.LblStatus = new System.Windows.Forms.Label();
             this.btnUseTheCamera = new System.Windows.Forms.Button();
             this.cmbBoxAvailableDevices = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnCapture = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +43,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.imgBox.Location = new System.Drawing.Point(13, 13);
             this.imgBox.Name = "imgBox";
-            this.imgBox.Size = new System.Drawing.Size(860, 480);
+            this.imgBox.Size = new System.Drawing.Size(860, 504);
             this.imgBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgBox.TabIndex = 0;
             this.imgBox.TabStop = false;
@@ -57,7 +53,7 @@
             this.btnOpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenFile.Location = new System.Drawing.Point(114, 499);
+            this.btnOpenFile.Location = new System.Drawing.Point(15, 523);
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(75, 23);
             this.btnOpenFile.TabIndex = 1;
@@ -65,23 +61,11 @@
             this.btnOpenFile.UseVisualStyleBackColor = true;
             this.btnOpenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCancel.Location = new System.Drawing.Point(195, 499);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // btnScan
             // 
             this.btnScan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnScan.Location = new System.Drawing.Point(798, 499);
+            this.btnScan.Location = new System.Drawing.Point(798, 523);
             this.btnScan.Name = "btnScan";
             this.btnScan.Size = new System.Drawing.Size(75, 23);
             this.btnScan.TabIndex = 3;
@@ -89,29 +73,23 @@
             this.btnScan.UseVisualStyleBackColor = true;
             this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
             // 
-            // LblFile
-            // 
-            this.LblFile.AutoSize = true;
-            this.LblFile.Location = new System.Drawing.Point(12, 533);
-            this.LblFile.Name = "LblFile";
-            this.LblFile.Size = new System.Drawing.Size(118, 13);
-            this.LblFile.TabIndex = 4;
-            this.LblFile.Text = "The image from camera";
-            // 
             // LblStatus
             // 
+            this.LblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.LblStatus.AutoSize = true;
-            this.LblStatus.Location = new System.Drawing.Point(616, 504);
+            this.LblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LblStatus.Location = new System.Drawing.Point(581, 528);
             this.LblStatus.Name = "LblStatus";
-            this.LblStatus.Size = new System.Drawing.Size(176, 13);
+            this.LblStatus.Size = new System.Drawing.Size(211, 13);
             this.LblStatus.TabIndex = 5;
             this.LblStatus.Text = "Status: Not connected to the server";
             // 
             // btnUseTheCamera
             // 
             this.btnUseTheCamera.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnUseTheCamera.Location = new System.Drawing.Point(564, 528);
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUseTheCamera.Location = new System.Drawing.Point(500, 523);
             this.btnUseTheCamera.Name = "btnUseTheCamera";
             this.btnUseTheCamera.Size = new System.Drawing.Size(75, 23);
             this.btnUseTheCamera.TabIndex = 6;
@@ -121,46 +99,24 @@
             // 
             // cmbBoxAvailableDevices
             // 
+            this.cmbBoxAvailableDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbBoxAvailableDevices.FormattingEnabled = true;
-            this.cmbBoxAvailableDevices.Location = new System.Drawing.Point(136, 530);
+            this.cmbBoxAvailableDevices.Location = new System.Drawing.Point(96, 525);
             this.cmbBoxAvailableDevices.Name = "cmbBoxAvailableDevices";
-            this.cmbBoxAvailableDevices.Size = new System.Drawing.Size(414, 21);
+            this.cmbBoxAvailableDevices.Size = new System.Drawing.Size(398, 21);
             this.cmbBoxAvailableDevices.TabIndex = 7;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 504);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 13);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "The image from file";
-            // 
-            // btnCapture
-            // 
-            this.btnCapture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCapture.Location = new System.Drawing.Point(646, 528);
-            this.btnCapture.Name = "btnCapture";
-            this.btnCapture.Size = new System.Drawing.Size(75, 23);
-            this.btnCapture.TabIndex = 10;
-            this.btnCapture.Text = "Capture";
-            this.btnCapture.UseVisualStyleBackColor = true;
-            this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click);
             // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 558);
-            this.Controls.Add(this.btnCapture);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbBoxAvailableDevices);
             this.Controls.Add(this.btnUseTheCamera);
             this.Controls.Add(this.LblStatus);
-            this.Controls.Add(this.LblFile);
             this.Controls.Add(this.btnScan);
-            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOpenFile);
             this.Controls.Add(this.imgBox);
             this.MaximizeBox = false;
@@ -179,14 +135,10 @@
 
         private System.Windows.Forms.PictureBox imgBox;
         private System.Windows.Forms.Button btnOpenFile;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnScan;
-        private System.Windows.Forms.Label LblFile;
         private System.Windows.Forms.Label LblStatus;
         private System.Windows.Forms.Button btnUseTheCamera;
         private System.Windows.Forms.ComboBox cmbBoxAvailableDevices;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnCapture;
     }
 }
 
