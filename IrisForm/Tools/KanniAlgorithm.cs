@@ -38,13 +38,65 @@ namespace Helpers
             for (int y = 0; y < image.Width; y++)
                 for (int x = 0; x < image.Height; x++)
                 {
-                    int color = (int)Math.Sqrt(Math.Pow(G(y, x, true),2) + Math.Pow(G(y, x, false), 2));
+                    double Gx = G(y, x, true);
+                    double Gy = G(y, x, false);
 
+                    //int color = (int)Math.Sqrt(Math.Pow(Gx,2) + Math.Pow(Gy, 2));
 
-                    if (color < LowerBorder) color = 0;
-                    if (color > UpperBorder) color = 225;
+                    //Console.WriteLine(Math.Atan(Gx/Gy) * 180 / Math.PI * 2 + 180 + 22.5);
 
-                    newImage.SetPixel(y, x, Color.FromArgb(color, color, color));
+                    try
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            if ((Math.Atan(Gx / Gy) * 180 / Math.PI * 2 + 180 + 22.5) < ((i + 1) * 45))
+                            {
+                                Console.Write(i);
+                                switch (i)
+                                {
+                                    case 0:
+                                        newImage.SetPixel(y, x, Color.Red);
+                                        break;
+
+                                    case 1:
+                                        newImage.SetPixel(y, x, Color.Orange);
+                                        break;
+
+                                    case 2:
+                                        newImage.SetPixel(y, x, Color.Yellow);
+                                        break;
+
+                                    case 3:
+                                        newImage.SetPixel(y, x, Color.Green);
+                                        break;
+
+                                    case 4:
+                                        newImage.SetPixel(y, x, Color.LightBlue);
+                                        break;
+
+                                    case 5:
+                                        newImage.SetPixel(y, x, Color.Blue);
+                                        break;
+
+                                    case 6:
+                                        newImage.SetPixel(y, x, Color.Purple);
+                                        break;
+
+                                    case 7:
+                                        newImage.SetPixel(y, x, Color.Brown);
+                                        break;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    { }
+
+                    //if (color < LowerBorder) color = 0;
+                    //if (color > UpperBorder) color = 225;
+
+                    //newImage.SetPixel(y, x, Color.FromArgb(color, color, color));
                 }
 
             newImage.Save("New_image.jpg");

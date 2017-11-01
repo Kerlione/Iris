@@ -37,12 +37,14 @@ namespace Helpers {
 
             //KanniAlgorithm.Filtr("eye.jpg");
 
-            for (int i = 10; i >= 0; i--)
-            {
-                Bitmap image = new Bitmap("eye.jpg");
-                EdgeDetection.Detect(image, i);
-                image.Save("New_image(" + i + ").jpg");
-            }
+            //for (int i = 10; i >= 0; i--)
+            //{
+            //    Bitmap image = new Bitmap("eye.jpg");
+            //    EdgeDetection.Detect(image, i);
+            //    image.Save("New_image(" + i + ").jpg");
+            //}
+
+            KanniAlgorithm.Filtr("eye.jpg");
 
             Console.WriteLine("That's all!");
             Console.ReadKey();
