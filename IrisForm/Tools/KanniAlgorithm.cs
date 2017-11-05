@@ -10,8 +10,8 @@ namespace Helpers
 {
     public static class KanniAlgorithm
     {
-        const int LowerBorder = 120;
-        const int UpperBorder = 140;
+        const int LowerBorder = 0;
+        const int UpperBorder = 255;
 
         static readonly int[,] Dx = new int[3, 3]
         {
@@ -51,7 +51,7 @@ namespace Helpers
                         {
                             if ((Math.Atan(Gx / Gy) * 180 / Math.PI * 2 + 180 + 22.5) < ((i + 1) * 45))
                             {
-                                Console.Write(i);
+                                //Console.Write(i);
                                 switch (i)
                                 {
                                     case 0:
