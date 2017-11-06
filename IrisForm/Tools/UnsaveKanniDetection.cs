@@ -11,8 +11,10 @@ namespace Helpers
     class UnsaveKanniDetection
     {
         enum Direction { HORIZONTAL, VERTICAL, PLUS_DIAGONAL, MINUS_DIAGONAL }
+        private readonly static byte WHITE = 255;
+        private readonly static byte BLACK = 0;
 
-        public static void Detect(Bitmap b, float lowerThreshold, float uperThreshold)
+        public static void Detect(Bitmap b, float lowerThreshold = 0, float uperThreshold = 255)
         {
             Bitmap bSrc = (Bitmap)b.Clone();
 
@@ -41,7 +43,7 @@ namespace Helpers
                     {
                         // For borders
                         if (y == 0 || y == nHeight - 1 || x == 0 || x == nWidth - 1)
-                            p[0] = p[1] = p[2] = 0;
+                            p[0] = p[1] = p[2] = WHITE;
                         else
                         {
                             // Get matrix
@@ -79,10 +81,17 @@ namespace Helpers
                             //else
                             //    p[0] = p[1] = p[2] = 255;
 
-                            if (gradient[y, x] < lowerThreshold || gradient[y, x] > uperThreshold)
-                                gradient[y, x] = 0;
-                            
-                                
+                            //if (gradient[y, x] > lowerThreshold)// || gradient[y, x] > uperThreshold)
+                            //{
+                            //    gradient[y, x] = BLACK;
+                            //    //p[0] = p[1] = p[2] = 255;
+                            //}
+                            //else
+                            //{
+                            //    gradient[y, x] = WHITE;
+                            //    p[0] = p[1] = p[2] = 0;
+                            //    //gradient[y, x] = 0;
+                            //}   
 
 
                         }
@@ -138,41 +147,35 @@ namespace Helpers
                         // Only for inside
                         if (y > 1 && y < nHeight - 2 && x > 1 && x < nWidth - 2)
                         {
-
-                            //if (directions[y, x] == directions[y, x - 1] && directions[y, x] == directions[y, x + 1] && directions[y, x] == directions[y + 1, x - 1] && directions[y, x] == directions[y + 1, x + 1] &&
-                            //    directions[y, x] == directions[y + 1, x] && directions[y, x] == directions[y - 1, x] && directions[y, x] == directions[y - 1, x - 1] && directions[y, x] == directions[y - 1, x + 1])
-                                //p[0] = p[1] = p[2] = (byte)(gradient[y, x] >= 255 ? 255 : gradient[y, x]);
-                            //else
-                            //    p[0] = p[1] = p[2] = 0;
-
+                            // Say "GET RECT" for non maximum points
                             switch (directions[y, x])
                             {
                                 case Direction.HORIZONTAL:
                                     if (gradient[y, x - 1] < gradient[y, x] && gradient[y, x + 1] < gradient[y, x])
-                                        p[0] = p[1] = p[2] = 0;
+                                        p[0] = p[1] = p[2] = gradient[y, x] > lowerThreshold ? BLACK : WHITE;
                                     else
-                                        p[0] = p[1] = p[2] = 255;
+                                        p[0] = p[1] = p[2] = WHITE;// (byte)gradient[y, x];
                                     break;
 
                                 case Direction.VERTICAL:
                                     if (gradient[y - 1, x] < gradient[y, x] && gradient[y + 1, x] < gradient[y, x])
-                                        p[0] = p[1] = p[2] = 0;
+                                        p[0] = p[1] = p[2] = gradient[y, x] > lowerThreshold ? BLACK : WHITE;
                                     else
-                                        p[0] = p[1] = p[2] = 255;
+                                        p[0] = p[1] = p[2] = WHITE;// (byte)gradient[y, x];
                                     break;
 
                                 case Direction.MINUS_DIAGONAL:
                                     if (gradient[y - 1, x - 1] < gradient[y, x] && gradient[y + 1, x + 1] < gradient[y, x])
-                                        p[0] = p[1] = p[2] = 0;
+                                        p[0] = p[1] = p[2] = gradient[y, x] > lowerThreshold ? BLACK : WHITE;
                                     else
-                                        p[0] = p[1] = p[2] = 255;
+                                        p[0] = p[1] = p[2] = WHITE;// (byte)gradient[y, x];
                                     break;
 
                                 case Direction.PLUS_DIAGONAL:
                                     if (gradient[y + 1, x - 1] < gradient[y, x] && gradient[y - 1, x + 1] < gradient[y, x])
-                                        p[0] = p[1] = p[2] = 0;
+                                        p[0] = p[1] = p[2] = gradient[y, x] > lowerThreshold ? BLACK : WHITE;
                                     else
-                                        p[0] = p[1] = p[2] = 255;
+                                        p[0] = p[1] = p[2] = WHITE;// (byte)gradient[y, x];
                                     break;
                             }
 
