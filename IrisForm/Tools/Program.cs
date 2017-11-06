@@ -15,7 +15,7 @@ namespace Helpers {
             //Console.WriteLine("Unasve end!");
             //KanniAlgorithm.Filtr("testingImage.jpg");
 
-            Bitmap b = new Bitmap("eye2.jpg");
+            Bitmap b = new Bitmap("eye.jpg");
 
             UnsaveKanniDetection.Detect(b, 0, 255);
             b.Save("UltraTest.jpg");

@@ -134,11 +134,28 @@ namespace Helpers
                         if (y > 1 && y < nHeight - 2 && x > 1 && x < nWidth - 2)
                         {
 
-                            if (directions[y, x] == directions[y, x - 1] && directions[y, x] == directions[y, x + 1] && directions[y, x] == directions[y + 1, x - 1] && directions[y, x] == directions[y + 1, x + 1] &&
-                                directions[y, x] == directions[y + 1, x] && directions[y, x] == directions[y - 1, x] && directions[y, x] == directions[y - 1, x - 1] && directions[y, x] == directions[y - 1, x + 1])
+                            //if (directions[y, x] == directions[y, x - 1] && directions[y, x] == directions[y, x + 1] && directions[y, x] == directions[y + 1, x - 1] && directions[y, x] == directions[y + 1, x + 1] &&
+                            //    directions[y, x] == directions[y + 1, x] && directions[y, x] == directions[y - 1, x] && directions[y, x] == directions[y - 1, x - 1] && directions[y, x] == directions[y - 1, x + 1])
                                 p[0] = p[1] = p[2] = (byte)(gradient[y, x] >= 255 ? 255 : gradient[y, x]);
-                            else
-                                p[0] = p[1] = p[2] = 0;
+                            //else
+                            //    p[0] = p[1] = p[2] = 0;
+
+                            switch (directions[y, x])
+                            {
+                                case Direction.HORIZONTAL:
+                                    break;
+
+                                case Direction.VERTICAL:
+                                    break;
+
+                                case Direction.PLUS_DIAGONAL:
+                                    break;
+
+                                case Direction.MINUS_DIAGONAL:
+                                    break;
+                            }
+
+
                         }
 
                         // Trashold
