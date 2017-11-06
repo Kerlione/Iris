@@ -71,7 +71,7 @@ namespace Helpers
                             {
                                 directions[y, x] = Direction.MINUS_DIAGONAL;
                             }
-                            
+
 
                             //// Trashold
                             //if (D > lowerThreshold && D < uperThreshold)
@@ -79,7 +79,12 @@ namespace Helpers
                             //else
                             //    p[0] = p[1] = p[2] = 255;
 
+                            if (gradient[y, x] < lowerThreshold || gradient[y, x] > uperThreshold)
+                                gradient[y, x] = 0;
                             
+                                
+
+
                         }
 
                         p += 3;
@@ -136,22 +141,38 @@ namespace Helpers
 
                             //if (directions[y, x] == directions[y, x - 1] && directions[y, x] == directions[y, x + 1] && directions[y, x] == directions[y + 1, x - 1] && directions[y, x] == directions[y + 1, x + 1] &&
                             //    directions[y, x] == directions[y + 1, x] && directions[y, x] == directions[y - 1, x] && directions[y, x] == directions[y - 1, x - 1] && directions[y, x] == directions[y - 1, x + 1])
-                                p[0] = p[1] = p[2] = (byte)(gradient[y, x] >= 255 ? 255 : gradient[y, x]);
+                                //p[0] = p[1] = p[2] = (byte)(gradient[y, x] >= 255 ? 255 : gradient[y, x]);
                             //else
                             //    p[0] = p[1] = p[2] = 0;
 
                             switch (directions[y, x])
                             {
                                 case Direction.HORIZONTAL:
+                                    if (gradient[y, x - 1] < gradient[y, x] && gradient[y, x + 1] < gradient[y, x])
+                                        p[0] = p[1] = p[2] = 0;
+                                    else
+                                        p[0] = p[1] = p[2] = 255;
                                     break;
 
                                 case Direction.VERTICAL:
-                                    break;
-
-                                case Direction.PLUS_DIAGONAL:
+                                    if (gradient[y - 1, x] < gradient[y, x] && gradient[y + 1, x] < gradient[y, x])
+                                        p[0] = p[1] = p[2] = 0;
+                                    else
+                                        p[0] = p[1] = p[2] = 255;
                                     break;
 
                                 case Direction.MINUS_DIAGONAL:
+                                    if (gradient[y - 1, x - 1] < gradient[y, x] && gradient[y + 1, x + 1] < gradient[y, x])
+                                        p[0] = p[1] = p[2] = 0;
+                                    else
+                                        p[0] = p[1] = p[2] = 255;
+                                    break;
+
+                                case Direction.PLUS_DIAGONAL:
+                                    if (gradient[y + 1, x - 1] < gradient[y, x] && gradient[y - 1, x + 1] < gradient[y, x])
+                                        p[0] = p[1] = p[2] = 0;
+                                    else
+                                        p[0] = p[1] = p[2] = 255;
                                     break;
                             }
 

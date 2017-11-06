@@ -17,7 +17,7 @@ namespace Helpers {
 
             Bitmap b = new Bitmap("eye.jpg");
 
-            UnsaveKanniDetection.Detect(b, 0, 255);
+            UnsaveKanniDetection.Detect(b, 0, 100);
             b.Save("UltraTest.jpg");
 
             //for (int j = 0; j < 255; j += 3)
